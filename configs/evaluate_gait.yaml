@@ -1,0 +1,31 @@
+# Basic
+work_dir: ./work_dir/eval_gait
+phase: test
+device: ["cuda:1"]
+action_type: gait
+
+# Log
+save_score: False
+
+# feeder
+feeder: STGCN.feeder.Feeder
+test_feeder_args:
+  data_path: “”“YOUR_DATA_PATH“”“
+  label_path : “”“YOUR_DATA_PATH“”“
+
+# model
+model: STGCN.net.ST_GCN
+model_args:
+  num_class: 5
+  channel: 3
+  window_size: 45
+  num_point: 32
+  dropout: 0
+  graph: STGCN.graph.Azure
+  graph_args:
+    labeling_mode: 'spatial'
+  use_data_bn: True
+  mask_learning: True
+
+test_batch_size: 512
+weights: model/epoch100_gait_model.pt

@@ -1,0 +1,60 @@
+
+# Basic
+work_dir: .
+phase: pred
+device: ["cuda:1"]
+action_type: gait
+
+# Log
+save_score: False
+print_log: False
+# feeder
+feeder: ST_TR.feeder.Feeder_kinetics
+
+# model
+model: ST_TR.net.ST_GCN
+model_args:
+  num_class: 5
+  channel: 3
+  window_size: 45
+  num_person: 2
+  num_point: 32
+  dropout: 0.2
+  graph: ST_TR.graph.Kinetics
+  graph_args:
+    labeling_mode: 'spatial'
+  mask_learning: True
+  use_data_bn: True
+  attention: False
+  only_attention: True
+  tcn_attention: True
+  data_normalization: True
+  skip_conn: True
+  weight_matrix: 2
+  only_temporal_attention: True
+  bn_flag: True
+  attention_3: False
+  kernel_temporal: 9
+  more_channels: False
+  double_channel: True
+  drop_connect: True
+  concat_original: True
+  all_layers: False
+  adjacency: False
+  agcn: False
+  dv: 0.25
+  dk: 0.25
+  Nh: 8
+  device: "cuda:1" 
+  n: 4
+  dim_block1: 10
+  dim_block2: 30
+  dim_block3: 75
+  relative: False
+  visualization: False
+
+  #optical_flow: True
+
+#optim
+test_batch_size: 512
+weights: model/best_tr_gait_model.pt

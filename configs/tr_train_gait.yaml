@@ -1,0 +1,74 @@
+
+# Basic
+work_dir: ./work_dir/train_gait_all_v2
+phase: train
+device: ["cuda:1"]
+action_type: gait
+num_worker: 0
+# Log
+save_score: False
+# feeder
+feeder: ST_TR.feeder.Feeder
+train_feeder_args:
+  random_choose: True
+  random_move: True
+  window_size: 45
+  data_path: “”“YOUR_DATA_PATH“”“
+  label_path: “”“YOUR_DATA_PATH“”“
+test_feeder_args:
+  data_path: “”“YOUR_DATA_PATH“”“
+  label_path: “”“YOUR_DATA_PATH“”“
+
+# model
+model: ST_TR.net.ST_GCN
+model_args:
+  num_class: 5
+  channel: 3
+  window_size: 45
+  num_point: 32
+  dropout: 0.2
+  graph: ST_TR.graph.azure
+  graph_args:
+    labeling_mode: 'spatial'
+  mask_learning: True
+  use_data_bn: True
+  attention: False
+  only_attention: True
+  tcn_attention: True
+  data_normalization: True
+  skip_conn: True
+  weight_matrix: 1
+  only_temporal_attention: True
+  bn_flag: True
+  attention_3: False
+  kernel_temporal: 9
+  more_channels: False
+  double_channel: False
+  drop_connect: True
+  concat_original: True
+  all_layers: False
+  adjacency: False
+  agcn: False
+  dv: 0.25
+  dk: 0.25
+  Nh: 8
+  device: "cuda:1" 
+  n: 4
+  dim_block1: 10
+  dim_block2: 30
+  dim_block3: 75
+  relative: False
+  visualization: False
+
+  #optical_flow: True
+
+#optim
+weight_decay: 0.01
+base_lr: 0.01
+step: [40, 80, 120]
+
+# training
+batch_size: 256
+test_batch_size: 512
+num_epoch: 150
+nesterov: True
